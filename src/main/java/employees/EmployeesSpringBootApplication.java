@@ -20,10 +20,11 @@ public class EmployeesSpringBootApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        List<Employee> names = jdbcTemplate.query("select id, emp_name from employees", (resultSet, i) -> new Employee(resultSet.getLong("id"), resultSet.getString("emp_name")));
-        System.out.println(names);
+        jdbcTemplate.update("INSERT INTO `employees` (`emp_name`) VALUES (?)", "Jane Spring Boot Doe");
 
-        jdbcTemplate.update("insert into employees(emp_name) values (?)", "Jane Spring Boot Doe");
+        List<Employee> employees = jdbcTemplate.query("SELECT `id`, `emp_name` FROM `employees` ORDER BY `emp_name`",
+                (resultSet, i) -> new Employee(resultSet.getLong("id"), resultSet.getString("emp_name")));
+        System.out.println(employees);
     }
 
 }
