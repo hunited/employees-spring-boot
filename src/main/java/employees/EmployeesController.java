@@ -18,9 +18,10 @@ public class EmployeesController {
     @GetMapping("/employees")
     @ResponseBody
     public String listEmployees() {
+        jdbcTemplate.update("INSERT INTO `employees` (`emp_name`) VALUES (?)", "Jane Spring Boot Doe");
         List<Employee> employees = jdbcTemplate.query("SELECT `id`, `emp_name` FROM `employees` ORDER BY `emp_name`",
                 (resultSet, i) -> new Employee(resultSet.getLong("id"), resultSet.getString("emp_name")));
-        return employees.stream().map(Employee::getName).collect(Collectors.joining(", "));
+        return "<h1>" + employees.stream().map(Employee::getName).collect(Collectors.joining(", ")) + "</h1>";
     }
 
 }
