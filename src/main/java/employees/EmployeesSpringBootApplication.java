@@ -9,22 +9,20 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.List;
 
 @SpringBootApplication
-public class EmployeesSpringBootApplication implements CommandLineRunner {
+public class EmployeesSpringBootApplication {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+	@Autowired
+	public static void main(String[] args) {
+		SpringApplication.run(EmployeesSpringBootApplication.class, args);
+	}
 
-    public static void main(String[] args) {
-        SpringApplication.run(EmployeesSpringBootApplication.class, args);
-    }
-
-    @Override
-    public void run(String... args) {
-        jdbcTemplate.update("INSERT INTO `employees` (`emp_name`) VALUES (?)", "Jane Spring Boot Doe");
-
-        List<Employee> employees = jdbcTemplate.query("SELECT `id`, `emp_name` FROM `employees` ORDER BY `emp_name`",
-                (resultSet, i) -> new Employee(resultSet.getLong("id"), resultSet.getString("emp_name")));
-        System.out.println(employees);
-    }
-
+//	private JdbcTemplate jdbcTemplate;
+//
+//	public void run(String... args) {
+//		jdbcTemplate.update("INSERT INTO `employees` (`emp_name`) VALUES (?)", "Jane Spring Boot Doe");
+//
+//		List<Employee> employees = jdbcTemplate.query("SELECT `id`, `emp_name` FROM `employees` ORDER BY `emp_name`",
+//				(resultSet, i) -> new Employee(resultSet.getLong("id"), resultSet.getString("emp_name")));
+//		System.out.println(employees);
+//	}
 }
